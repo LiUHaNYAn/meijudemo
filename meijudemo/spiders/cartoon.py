@@ -24,7 +24,6 @@ class CartoonSpider(scrapy.Spider):
         val = response.xpath("//div[@class='page']/span/text()").extract()[0]
         pagenum = int(str(val).split("/")[1].split(" ")[0])
         classid = response.url.split('.html')[0][-1]
-        print("==================",response.url)
         yield self.make_requests_from_url(response.url)
         for i in range(pagenum):
             url = ("http://www.meijutt.com/file/list%s.html" % classid).replace(".html", "_" + str(i + 1) + ".html")
@@ -33,7 +32,6 @@ class CartoonSpider(scrapy.Spider):
     def parse(self, response):
         data = response.xpath("//div[@class='cn_box2']")
         url = str(response.url)
-        print("=======",url)
         classid=0
         if url.find("_")>0:
             classid = url.split("_")[0][-1]
